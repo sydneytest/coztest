@@ -1,9 +1,9 @@
-# Module to create super user policy
+# Module to create ECR user policy
 
-resource "aws_iam_policy" "superuser" {
-  name        = "superuser_policy"
+resource "aws_iam_policy" "ecruser" {
+  name        = "ecruser_policy"
   path        = "/"
-  description = "Super user policy"
+  description = "ECR user policy"
 
   policy = <<EOF
 {
@@ -11,7 +11,20 @@ resource "aws_iam_policy" "superuser" {
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": "*",
+            "Action": [
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:DescribeImages",
+                "ecr:BatchGetImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:PutImage"
+            ],
             "Resource": "*"
         }
     ]
